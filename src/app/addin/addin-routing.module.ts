@@ -4,9 +4,10 @@ import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
-    path: 'settings',
+    path: '',
     component: SettingsComponent,
     data: { showHeader: false, showFooter: false },
+    pathMatch: 'full',
   },
 ];
 

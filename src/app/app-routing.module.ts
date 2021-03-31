@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'outlookHello',
+    path: '',
     loadChildren: () =>
       import('./addin/addin.module').then(
         (m) => m.AddinModule
