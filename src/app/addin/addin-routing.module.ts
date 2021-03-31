@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { SettingsComponent } from './settings/settings.component';
+
+const routes: Routes = [
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    data: { showHeader: false, showFooter: false },
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class AddinRoutingModule { }
