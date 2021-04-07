@@ -10,11 +10,25 @@
     function reload() {
       window.location.reload();
     }
+
+    function log(message) {
+      console.log(message);
+      var logdiv = document.getElementById("DivScriptLoaderLog");
+      if (logdiv) {
+          var newdiv = document.createElement("div");
+          newdiv.appendChild(document.createTextNode(message));
+          logdiv.appendChild(newdiv);
+      }
+    }
+
+    window.log = log;
   </script>
 </head>
 <body>
-  <div style="height:40px; width:40px; position: fixed; z-index: 998;">
-    <button onclick="reload()" style="position: fixed; z-index: 999;">Reload</button>
+  <div id="DivScriptLoaderLog" style="height: 100px; width: 1000px; z-index: 999; overflow: scroll;">
+  </div>
+  <div style="height:40px; width:40px; position: fixed; z-index: 997;">
+    <button onclick="reload()" style="position: fixed; z-index: 998;">Reload</button>
   </div>
   <app-root></app-root>
 </body>

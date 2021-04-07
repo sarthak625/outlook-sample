@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+declare global {
+  interface Window { log: any; }
+}
+
 declare const Office;
 @Component({
   selector: 'app-settings',
@@ -15,7 +19,7 @@ export class SettingsComponent implements OnInit {
     const node = document.createElement('script');
     node.src = url;
     node.type = 'text/javascript';
-    node.async = false;
+    // node.async = false;
     node.charset = 'utf-8';
     document.getElementsByTagName('head')[0].appendChild(node);
     return node;
@@ -29,7 +33,9 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.log('trying to load office.js');
     this.loadScript(this.OUTLOOK_URL).onload = () => {
+      window.log('office.js is loaded');
       this.initializeOutlook();
     };
   }
