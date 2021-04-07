@@ -1,0 +1,312 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+          xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+          xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+          xsi:type="MailApp">
+
+  <!-- Begin Basic Settings: Add-in metadata, used for all versions of Office unless override provided. -->
+
+  <!-- IMPORTANT! Id must be unique for your add-in, if you reuse this manifest ensure that you change this id to a new GUID. -->
+  <Id>f7bad2f3-c4ca-492d-93cd-7828d5bd458f</Id>
+
+  <!--Version. Updates from the store only get triggered if there is a version change. -->
+  <Version>1.0.0.0</Version>
+  <ProviderName>Jio</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
+  <DisplayName DefaultValue="JioMeet"/>
+  <Description DefaultValue="JioMeet for Outlook"/>
+  <IconUrl DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-80.png" />
+  <SupportUrl DefaultValue="https://jiomeetpro.jio.com/webhelp" />
+
+  <!-- Domains that will be allowed when navigating. For example, if you use ShowTaskpane and then have an href link, navigation will only be allowed if the domain is on this list. -->
+  <AppDomains>
+    <AppDomain>https://jiomeetdev.jiomeet.com</AppDomain>
+    <AppDomain>https://stage.jiomeet.com</AppDomain>
+    <AppDomain>https://prestage.jiomeet.com</AppDomain>
+    <AppDomain>https://jiomeetpro.jio.com</AppDomain>
+    <AppDomain>https://jiomeetstage.jiomeet.com</AppDomain>
+    <AppDomain>https://localhost:4200</AppDomain>
+  </AppDomains>
+  <!--End Basic Settings. -->
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.7" />
+    </Sets>
+  </Requirements>
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://jiomeetdev.jiomeet.com"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteMailbox</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+  <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit" />
+  <Rule xsi:type="ItemIs" ItemType="Appointment" FormType="Edit" />
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+        <bt:Sets DefaultMinVersion="1.7">
+          <bt:Set Name="Mailbox" />
+        </bt:Sets>
+    </Requirements>
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <!-- Location of the Functions that UI-less buttons can trigger (ExecuteFunction Actions). -->
+          <FunctionFile resid="functionFile" />
+          <ExtensionPoint xsi:type="AppointmentOrganizerCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadGroup">
+                <Label resid="groupLabel" />
+                <Control xsi:type="Button" id="addJioMeetButton">
+                  <Label resid="addJioMeetButtonLabel" />
+                  <Tooltip resid="addJioMeetButtonTooltip" />
+                  <Supertip>
+                    <Title resid="addJioMeetButtonTipTitle" />
+                    <Description resid="addJioMeetButtonTipDescription" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon-16"/>
+                    <bt:Image size="32" resid="icon-32"/>
+                    <bt:Image size="64" resid="icon-64"/>
+                    <bt:Image size="80" resid="icon-80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertJioMeetMeeting</FunctionName>
+                  </Action>
+                </Control>
+                    <!-- Task pane button -->
+                    <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                      <Label resid="paneReadButtonLabel" />
+                      <Supertip>
+                        <Title resid="paneReadSuperTipTitle" />
+                        <Description resid="paneReadSuperTipDescription" />
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="settings_icon_16"/>
+                        <bt:Image size="32" resid="settings_icon_32"/>
+                        <bt:Image size="64" resid="settings_icon_64"/>
+                        <bt:Image size="80" resid="settings_icon_80"/>
+                      </Icon>
+                      <Action xsi:type="ShowTaskpane">
+                        <SourceLocation resid="messageReadTaskPaneUrl" />
+                      </Action>
+                    </Control>
+                  </Group>
+                </OfficeTab>
+              </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon-16" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-16.png"/>
+        <bt:Image id="icon-32" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-32.png"/>
+        <bt:Image id="icon-48" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-48.png"/>
+        <bt:Image id="icon-64" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-64.png"/>
+        <bt:Image id="icon-80" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-80.png"/>
+        <bt:Image id="settings_icon_16" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_16.png"/>
+        <bt:Image id="settings_icon_32" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_32.png"/>
+        <bt:Image id="settings_icon_64" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_64.png"/>
+        <bt:Image id="settings_icon_80" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="messageReadTaskPaneUrl" DefaultValue="https://jiomeetstage.jiomeet.com/outlookHello/"/>
+        <bt:Url id="functionFile" DefaultValue="https://jiomeetstage.jiomeet.com/outlook/create-meeting"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="groupLabel" DefaultValue="JioMeet"/>
+        <bt:String id="customTabLabel"  DefaultValue="JioMeet"/>
+        <bt:String id="paneReadButtonLabel" DefaultValue="Settings">
+          <bt:Override Locale="es-ES" Value="Configuración" />
+          <bt:Override Locale="de-DE" Value="Einstellungen" />
+          <bt:Override Locale="zh-CN" Value="设置" />
+          <bt:Override Locale="zh-TW" Value="設定" />
+          <bt:Override Locale="fr-FR" Value="Paramètres" />
+          <bt:Override Locale="fr-CA" Value="Paramètres" />
+          <bt:Override Locale="pt-PT" Value="Configurações" />
+          <bt:Override Locale="ja-jp" Value="設定" />
+          <bt:Override Locale="ru-RU" Value="Настройки" />
+          <bt:Override Locale="ko-KR" Value="설정" />
+          <bt:Override Locale="it-IT" Value="Impostazioni" />
+          <bt:Override Locale="vi-VN" Value="Cài đặt" />
+        </bt:String>
+        <bt:String id="paneReadSuperTipTitle" DefaultValue="My Meeting Settings"/>
+        <bt:String id="addJioMeetButtonLabel" DefaultValue="Add a JioMeet Meeting">
+          <bt:Override Locale="es-ES" Value="Añadir reunión de JioMeet" />
+          <bt:Override Locale="de-DE" Value="Ein JioMeet-Meeting hinzufügen" />
+          <bt:Override Locale="zh-CN" Value="添加JioMeet会议" />
+          <bt:Override Locale="zh-TW" Value="新增JioMeet會議" />
+          <bt:Override Locale="fr-FR" Value="Ajouter une réunion JioMeet" />
+          <bt:Override Locale="fr-CA" Value="Ajouter une réunion JioMeet" />
+          <bt:Override Locale="pt-PT" Value="Adicionar uma reunião JioMeet" />
+          <bt:Override Locale="ja-jp" Value="JioMeetミーティングを追加" />
+          <bt:Override Locale="ru-RU" Value="Добавить конференцию JioMeet" />
+          <bt:Override Locale="ko-KR" Value="JioMeet 회의 추가" />
+          <bt:Override Locale="it-IT" Value="Aggiungi una riunione JioMeet" />
+          <bt:Override Locale="vi-VN" Value="Thêm một cuộc họp JioMeet" />
+        </bt:String>
+        <bt:String id="addJioMeetButtonTipTitle" DefaultValue="Schedule JioMeet Meeting"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="paneReadSuperTipDescription" DefaultValue="My Meeting Settings"/>
+        <bt:String id="addJioMeetButtonTipDescription" DefaultValue="Schedule JioMeet Meeting"/>
+      </bt:LongStrings>
+    </Resources>
+
+    <!-- Implement schema v1.1 to support more new features -->
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.7">
+          <bt:Set Name="Mailbox" />
+        </bt:Sets>
+      </Requirements>
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <DesktopFormFactor>
+            <SupportsSharedFolders>true</SupportsSharedFolders>
+            <!-- Location of the Functions that UI-less buttons can trigger (ExecuteFunction Actions). -->
+            <FunctionFile resid="functionFile" />
+            <ExtensionPoint xsi:type="AppointmentOrganizerCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgReadGroup">
+                  <Label resid="groupLabel" />
+                  <Control xsi:type="Button" id="addJioMeetButton">
+                    <Label resid="addJioMeetButtonLabel" />
+                    <Tooltip resid="addJioMeetButtonTooltip" />
+                    <Supertip>
+                      <Title resid="addJioMeetButtonTipTitle" />
+                      <Description resid="addJioMeetButtonTipDescription" />
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="icon-16"/>
+                      <bt:Image size="32" resid="icon-32"/>
+                      <bt:Image size="64" resid="icon-64"/>
+                      <bt:Image size="80" resid="icon-80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>insertJioMeetMeeting</FunctionName>
+                    </Action>
+                  </Control>
+                      <!-- Task pane button -->
+                      <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                        <Label resid="paneReadButtonLabel" />
+                        <Supertip>
+                          <Title resid="paneReadSuperTipTitle" />
+                          <Description resid="paneReadSuperTipDescription" />
+                        </Supertip>
+                        <Icon>
+                          <bt:Image size="16" resid="settings_icon_16"/>
+                          <bt:Image size="32" resid="settings_icon_32"/>
+                          <bt:Image size="64" resid="settings_icon_64"/>
+                          <bt:Image size="80" resid="settings_icon_80"/>
+                        </Icon>
+                        <Action xsi:type="ShowTaskpane">
+                          <SourceLocation resid="messageReadTaskPaneUrl" />
+                        </Action>
+                      </Control>
+                    </Group>
+                  </OfficeTab>
+                </ExtensionPoint>
+          </DesktopFormFactor>
+          <MobileFormFactor>
+            <FunctionFile resid="functionFile" />
+            <ExtensionPoint xsi:type="MobileOnlineMeetingCommandSurface">
+              <Control xsi:type="MobileButton" id="msgReadFunctionButton">
+                <Label resid="addJioMeetButtonLabel" />
+                <Icon xsi:type="bt:MobileIconList">
+                    <bt:Image size="25" scale="1" resid="addJioMeetmobile25" />
+                    <bt:Image size="25" scale="2" resid="addJioMeetmobile25" />
+                    <bt:Image size="25" scale="3" resid="addJioMeetmobile25" />
+                    <bt:Image size="32" scale="1" resid="addJioMeetmobile32" />
+                    <bt:Image size="32" scale="2" resid="addJioMeetmobile32" />
+                    <bt:Image size="32" scale="3" resid="addJioMeetmobile32" />
+                    <bt:Image size="48" scale="1" resid="addJioMeetmobile48" />
+                    <bt:Image size="48" scale="2" resid="addJioMeetmobile48" />
+                    <bt:Image size="48" scale="3" resid="addJioMeetmobile48" />
+                  </Icon>
+              <Action xsi:type="ExecuteFunction">
+                  <FunctionName>insertJioMeetMeeting</FunctionName>
+              </Action>
+              </Control>
+            </ExtensionPoint>
+          </MobileFormFactor>
+        </Host>
+      </Hosts>
+
+      <Resources>
+        <bt:Images>
+        <bt:Image id="icon-16" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-16.png"/>
+        <bt:Image id="icon-32" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-32.png"/>
+        <bt:Image id="icon-48" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-48.png"/>
+        <bt:Image id="icon-64" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-64.png"/>
+        <bt:Image id="icon-80" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-80.png"/>
+        <bt:Image id="settings_icon_16" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_16.png"/>
+        <bt:Image id="settings_icon_32" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_32.png"/>
+        <bt:Image id="settings_icon_64" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_64.png"/>
+        <bt:Image id="settings_icon_80" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/settings_icon_80.png"/>
+        <bt:Image id="addJioMeetmobile25" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-16.png"/>
+        <bt:Image id="addJioMeetmobile32" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-32.png"/>
+        <bt:Image id="addJioMeetmobile48" DefaultValue="https://jiomeetdev.jiomeet.com/outlook_add_in/assets/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="messageReadTaskPaneUrl" DefaultValue="https://jiomeetstage.jiomeet.com/outlookHello/"/>
+          <bt:Url id="functionFile" DefaultValue="https://jiomeetstage.jiomeet.com/outlook/create-meeting"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="groupLabel" DefaultValue="JioMeet"/>
+          <bt:String id="customTabLabel"  DefaultValue="JioMeet"/>
+          <bt:String id="paneReadButtonLabel" DefaultValue="Settings">
+            <bt:Override Locale="es-ES" Value="Configuración" />
+            <bt:Override Locale="de-DE" Value="Einstellungen" />
+            <bt:Override Locale="zh-CN" Value="设置" />
+            <bt:Override Locale="zh-TW" Value="設定" />
+            <bt:Override Locale="fr-FR" Value="Paramètres" />
+            <bt:Override Locale="fr-CA" Value="Paramètres" />
+            <bt:Override Locale="pt-PT" Value="Configurações" />
+            <bt:Override Locale="ja-jp" Value="設定" />
+            <bt:Override Locale="ru-RU" Value="Настройки" />
+            <bt:Override Locale="ko-KR" Value="설정" />
+            <bt:Override Locale="it-IT" Value="Impostazioni" />
+            <bt:Override Locale="vi-VN" Value="Cài đặt" />
+          </bt:String>
+          <bt:String id="paneReadSuperTipTitle" DefaultValue="My Meeting Settings"/>
+          <bt:String id="addJioMeetButtonLabel" DefaultValue="Add a JioMeet Meeting">
+            <bt:Override Locale="es-ES" Value="Añadir reunión de JioMeet" />
+            <bt:Override Locale="de-DE" Value="Ein JioMeet-Meeting hinzufügen" />
+            <bt:Override Locale="zh-CN" Value="添加JioMeet会议" />
+            <bt:Override Locale="zh-TW" Value="新增JioMeet會議" />
+            <bt:Override Locale="fr-FR" Value="Ajouter une réunion JioMeet" />
+            <bt:Override Locale="fr-CA" Value="Ajouter une réunion JioMeet" />
+            <bt:Override Locale="pt-PT" Value="Adicionar uma reunião JioMeet" />
+            <bt:Override Locale="ja-jp" Value="JioMeetミーティングを追加" />
+            <bt:Override Locale="ru-RU" Value="Добавить конференцию JioMeet" />
+            <bt:Override Locale="ko-KR" Value="JioMeet 회의 추가" />
+            <bt:Override Locale="it-IT" Value="Aggiungi una riunione JioMeet" />
+            <bt:Override Locale="vi-VN" Value="Thêm một cuộc họp JioMeet" />
+          </bt:String>
+          <bt:String id="addJioMeetButtonTipTitle" DefaultValue="Schedule JioMeet Meeting"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="paneReadSuperTipDescription" DefaultValue="My Meeting Settings"/>
+          <bt:String id="addJioMeetButtonTipDescription" DefaultValue="Schedule JioMeet Meeting"/>
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>
