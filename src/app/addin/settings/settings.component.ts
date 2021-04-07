@@ -48,7 +48,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onOfficeReady() {
-    console.log('Office is ready. Further logic after office has loaded');
+    window.log('Office is ready. Further logic after office has loaded');
     this.loaded = true;
   }
 }
